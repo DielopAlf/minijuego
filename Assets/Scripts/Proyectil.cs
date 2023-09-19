@@ -1,35 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Proyectil : MonoBehaviour
 {
     public float Velocidad;
-    // Start is called before the first frame update
+    public int Daño = 1; // Daño que inflige el proyectil
+    public float TiempoDeVida = 5f; // Tiempo de vida del proyectil
+
     void Start()
     {
-        Destroy(gameObject, 5f);
+        // Destruye el proyectil después de un tiempo
+        Destroy(gameObject, TiempoDeVida);
     }
 
-    // Update is called once per frame
     void Update()
     {
-
-        transform.position += new Vector3(0, Velocidad * Time.deltaTime, 0);
-
+        // Mover hacia arriba
+        transform.Translate(Vector3.up * Velocidad * Time.deltaTime);
     }
-    private void OncollicionEnter2D (Collision2D collision)
+
+    void OnTriggerEnter2D(Collider2D other)
     {
-
-        if(collision.gameObject.name == "enemy")
+        // Verificar si el proyectil colisiona con la nave principal
+        if (other.CompareTag("NavePrincipal"))
         {
+            // Obtener el componente NavePrincipal del objeto colisionado
+            NavePrincipal navePrincipal = other.gameObject.GetComponent<NavePrincipal>();
 
-            collision.gameObject.GetComponentInParent<NaveEnemiga>().Vida -= 1;
+            // Verificar si se encontró el componente NavePrincipal
+            if (navePrincipal != null)
+            {
+                // Aplicar daño a la nave principal
+                navePrincipal.RecibirDaño(Daño);
+            }
 
+            // Destruir el proyectil al impactar con la nave principal
+            Destroy(gameObject);
         }
-
+        else
+        {
+            // Destruir el proyectil al impactar con cualquier otro objeto
+            Destroy(gameObject);
+        }
     }
 
-
-
+    public void InvertirDireccion()
+    {
+        // Cambia la dirección del proyectil invirtiendo su velocidad
+        Velocidad = -Velocidad;
+    }
 }
