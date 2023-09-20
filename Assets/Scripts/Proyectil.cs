@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Proyectil : MonoBehaviour
@@ -21,7 +23,7 @@ public class Proyectil : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Verificar si el proyectil colisiona con la nave principal
-        if (other.CompareTag("NavePrincipal"))
+        if (other.CompareTag("NaveEnemiga"))
         {
             // Obtener el componente NavePrincipal del objeto colisionado
             NavePrincipal navePrincipal = other.gameObject.GetComponent<NavePrincipal>();

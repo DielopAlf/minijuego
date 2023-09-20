@@ -14,7 +14,7 @@ public class NavePrincipal : MonoBehaviour
     public float frecuenciaDisparo = 0.5f; // Frecuencia de disparo en segundos
     private float tiempoUltimoDisparo;
 
-    private int vidas = 3;
+    public int vidas = 3;
 
     void Update()
     {
@@ -35,6 +35,8 @@ public class NavePrincipal : MonoBehaviour
             Disparar();
             tiempoUltimoDisparo = Time.time;
         }
+        Debug.Log(vidas);
+
     }
 
     void Disparar()
@@ -63,6 +65,9 @@ public class NavePrincipal : MonoBehaviour
         {
             // Manejar la lógica de juego cuando la nave queda sin vidas
             Destroy(gameObject);
+            
         }
     }
+
+   
 }
