@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NaveEnemiga : MonoBehaviour
@@ -10,6 +8,12 @@ public class NaveEnemiga : MonoBehaviour
     public float LímiteIzquierdo; // Límite izquierdo para el movimiento
     public float LímiteDerecho; // Límite derecho para el movimiento
     private bool moviendoseDerecha = true; // Flag para controlar la dirección del movimiento
+    public GameObject ProyectilPrefab; // Prefab del proyectil que dispara
+    public Transform PuntoDisparo; // Punto de origen del disparo
+    public float FrecuenciaDisparo = 1.0f; // Frecuencia de disparo en segundos
+    private float TiempoUltimoDisparo;
+
+    public int DañoProyectilEnemigo = 1; // Daño que inflige el proyectil del enemigo
 
     void Start()
     {
@@ -37,12 +41,35 @@ public class NaveEnemiga : MonoBehaviour
                 moviendoseDerecha = true;
             }
         }
+
+        // Disparar automáticamente hacia abajo
+        if (Time.time - TiempoUltimoDisparo >= FrecuenciaDisparo)
+        {
+            DispararAbajo();
+            TiempoUltimoDisparo = Time.time;
+        }
+    }
+
+    void DispararAbajo()
+    {
+        if (ProyectilPrefab != null && PuntoDisparo != null)
+        {
+            GameObject proyectil = Instantiate(ProyectilPrefab, PuntoDisparo.position, Quaternion.identity);
+            proyectil.tag = "ProyectilEnemigo"; // Etiqueta para identificar los proyectiles del enemigo
+
+            // Asigna el daño al proyectil
+            Proyectil proyectilScript = proyectil.GetComponent<Proyectil>();
+            if (proyectilScript != null)
+            {
+                proyectilScript.Daño = DañoProyectilEnemigo;
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         // Verificar si el proyectil tiene el tag "ProyectilJugador"
-        if (other.CompareTag("Proyectil"))
+        if (other.CompareTag("ProyectilJugador"))
         {
             // Obtener el componente Proyectil del proyectil
             Proyectil scriptProyectil = other.GetComponent<Proyectil>();
@@ -67,16 +94,6 @@ public class NaveEnemiga : MonoBehaviour
         {
             // La nave enemiga ha sido destruida
             Destroy(gameObject);
-        }
-    }
-
-    // Función para invertir la dirección del proyectil
-    public void InvertirDireccionProyectil(GameObject proyectil)
-    {
-        Proyectil scriptProyectil = proyectil.GetComponent<Proyectil>();
-        if (scriptProyectil != null)
-        {
-            scriptProyectil.InvertirDireccion();
         }
     }
 }

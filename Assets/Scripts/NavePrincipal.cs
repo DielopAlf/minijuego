@@ -14,7 +14,7 @@ public class NavePrincipal : MonoBehaviour
     public float frecuenciaDisparo = 0.5f; // Frecuencia de disparo en segundos
     private float tiempoUltimoDisparo;
 
-    public int vidas = 3;
+    private int vidas = 3;
 
     void Update()
     {
@@ -35,8 +35,6 @@ public class NavePrincipal : MonoBehaviour
             Disparar();
             tiempoUltimoDisparo = Time.time;
         }
-        Debug.Log(vidas);
-
     }
 
     void Disparar()
@@ -44,16 +42,7 @@ public class NavePrincipal : MonoBehaviour
         if (proyectilPrefab != null && puntoDisparo != null)
         {
             GameObject proyectil = Instantiate(proyectilPrefab, puntoDisparo.position, Quaternion.identity);
-
-            // Asigna un tag "Proyectil" al proyectil para identificarlo
-            proyectil.tag = "Proyectil";
-
-            // Obtiene el script Proyectil y le asigna la etiqueta "Proyectil"
-            Proyectil proyectilScript = proyectil.GetComponent<Proyectil>();
-            if (proyectilScript != null)
-            {
-                proyectilScript.tag = "Proyectil";
-            }
+            proyectil.tag = "ProyectilJugador"; // Etiqueta para identificar los proyectiles del jugador
         }
     }
 
@@ -65,9 +54,6 @@ public class NavePrincipal : MonoBehaviour
         {
             // Manejar la lógica de juego cuando la nave queda sin vidas
             Destroy(gameObject);
-            
         }
     }
-
-   
 }
