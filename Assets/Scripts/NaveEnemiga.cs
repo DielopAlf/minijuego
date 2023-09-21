@@ -66,7 +66,7 @@ public class NaveEnemiga : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+   /* void OnTriggerEnter2D(Collider2D other)
     {
         // Verificar si el proyectil tiene el tag "ProyectilJugador"
         if (other.CompareTag("ProyectilJugador"))
@@ -84,7 +84,7 @@ public class NaveEnemiga : MonoBehaviour
                 Destroy(other.gameObject);
             }
         }
-    }
+    }*/
 
     public void RecibirDaño(int cantidad)
     {

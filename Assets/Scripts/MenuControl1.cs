@@ -13,7 +13,7 @@ namespace MyNamespace
         public static bool nivel4Completado = false;
     }
 
-    public class MenuControl : MonoBehaviour
+    public class MenuControl1 : MonoBehaviour
     {
         public GameObject menuInicial;
         public GameObject menuNiveles;

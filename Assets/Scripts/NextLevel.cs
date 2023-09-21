@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NextLevel : MonoBehaviour
+public class nextlevel : MonoBehaviour
 {
-    public GameObject audioObject;
-    private AudioSource audioSource;
-    public AudioClip interfazaudio;
+
     void Start()
     {
-        audioSource = audioObject.GetComponent<AudioSource>();
-        Debug.Log("cargarnivel1");
+        Debug.Log("cargarnivel2");
     }
+
 
     public void LoadA(string nivel)
     {
-        audioSource.PlayOneShot(interfazaudio);
+
         SceneManager.LoadScene(nivel);
 
     }
