@@ -15,9 +15,14 @@ public class NaveEnemiga : MonoBehaviour
 
     public int DañoProyectilEnemigo = 1; // Daño que inflige el proyectil del enemigo
 
+    private NavePrincipal navePrincipal; // Referencia a la nave principal
+
     void Start()
     {
         VidaActual = VidaInicial; // Establecer la vida inicial
+
+        // Buscar la nave principal en la escena
+        navePrincipal = GameObject.FindObjectOfType<NavePrincipal>();
     }
 
     void Update()
@@ -66,33 +71,19 @@ public class NaveEnemiga : MonoBehaviour
         }
     }
 
-   /* void OnTriggerEnter2D(Collider2D other)
-    {
-        // Verificar si el proyectil tiene el tag "ProyectilJugador"
-        if (other.CompareTag("ProyectilJugador"))
-        {
-            // Obtener el componente Proyectil del proyectil
-            Proyectil scriptProyectil = other.GetComponent<Proyectil>();
-
-            // Verificar si se encontró el componente Proyectil
-            if (scriptProyectil != null)
-            {
-                // Aplicar daño a la nave enemiga
-                RecibirDaño(scriptProyectil.Daño);
-
-                // Destruir el proyectil al impactar
-                Destroy(other.gameObject);
-            }
-        }
-    }*/
-
     public void RecibirDaño(int cantidad)
     {
         VidaActual -= cantidad;
 
         if (VidaActual <= 0)
         {
-            // La nave enemiga ha sido destruida
+            // Notificar a la nave principal que esta nave enemiga ha sido destruida
+            if (navePrincipal != null)
+            {
+                navePrincipal.NaveEnemigaDestruida();
+            }
+
+            // Destruir la nave enemiga
             Destroy(gameObject);
         }
     }

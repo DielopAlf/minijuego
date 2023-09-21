@@ -232,6 +232,10 @@ MonoBehaviour:
   proyectilPrefab: {fileID: 1832975756812260175, guid: b31f0538b61930c4d994eb3bb6018d1f, type: 3}
   puntoDisparo: {fileID: 2009795211}
   frecuenciaDisparo: 0.2
+  panelDerrota: {fileID: 1314782509}
+  panelVictoria: {fileID: 1644426796}
+  tiempoLimiteDestrucionEnemigas: 10
+  totalNavesEnemigas: 2
 --- !u!61 &177127684
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -311,7 +315,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 177127680}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df4cda9cb7315cb4182ecf26d1546a7a, type: 3}
   m_Name: 
@@ -569,7 +573,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 539083513}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 177127683}
+        m_TargetAssemblyTypeName: NavePrincipal, Assembly-CSharp
+        m_MethodName: ReiniciarNivel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &539083513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -837,7 +853,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 859054997}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 177127683}
+        m_TargetAssemblyTypeName: NavePrincipal, Assembly-CSharp
+        m_MethodName: VolverAlMenuPrincipal
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &859054997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1263,7 +1291,7 @@ MonoBehaviour:
   "L\xEDmiteDerecho": 2.12
   ProyectilPrefab: {fileID: 0}
   PuntoDisparo: {fileID: 0}
-  FrecuenciaDisparo: 0.5
+  FrecuenciaDisparo: 0
   "Da\xF1oProyectilEnemigo": 1
 --- !u!50 &1090889499
 Rigidbody2D:
@@ -1923,7 +1951,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1467576511}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 177127683}
+        m_TargetAssemblyTypeName: NavePrincipal, Assembly-CSharp
+        m_MethodName: VolverAlMenuPrincipal
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1467576511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2426,7 +2466,7 @@ MonoBehaviour:
   "L\xEDmiteDerecho": 2.12
   ProyectilPrefab: {fileID: 0}
   PuntoDisparo: {fileID: 0}
-  FrecuenciaDisparo: 0.5
+  FrecuenciaDisparo: 0
   "Da\xF1oProyectilEnemigo": 1
 --- !u!61 &1760051524
 BoxCollider2D:
@@ -2598,7 +2638,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1766761124}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 177127683}
+        m_TargetAssemblyTypeName: NavePrincipal, Assembly-CSharp
+        m_MethodName: ReiniciarNivel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1766761124
 MonoBehaviour:
   m_ObjectHideFlags: 0
