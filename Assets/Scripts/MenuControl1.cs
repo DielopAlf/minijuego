@@ -53,21 +53,21 @@ namespace MyNamespace
         {
             switch (nivel)
             {
-                case "nivel2":
+                case "Nivel2":
                     if (!GameManager.nivel1Completado)
                     {
                         Debug.Log("Completa el nivel anterior primero.");
                         return;
                     }
                     break;
-                case "nivel3":
+                case "Nivel3":
                     if (!GameManager.nivel2Completado)
                     {
                         Debug.Log("Completa el nivel anterior primero.");
                         return;
                     }
                     break;
-                case "nivel4":
+                case "Nivel4":
                     if (!GameManager.nivel3Completado)
                     {
                         Debug.Log("Completa el nivel anterior primero.");
