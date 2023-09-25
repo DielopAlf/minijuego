@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Proyectil : MonoBehaviour
@@ -23,7 +21,7 @@ public class Proyectil : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Verificar si el proyectil colisiona con la nave principal
-        if (other.CompareTag("NaveEnemiga"))
+        if (other.CompareTag("NavePrincipal") && tag == "ProyectilEnemigo")
         {
             // Obtener el componente NavePrincipal del objeto colisionado
             NavePrincipal navePrincipal = other.gameObject.GetComponent<NavePrincipal>();
@@ -36,6 +34,21 @@ public class Proyectil : MonoBehaviour
             }
 
             // Destruir el proyectil al impactar con la nave principal
+            Destroy(gameObject);
+        }
+        else if (other.CompareTag("NaveEnemiga") && tag == "ProyectilJugador")
+        {
+            // Obtener el componente NaveEnemiga del objeto colisionado
+            NaveEnemiga naveEnemiga = other.gameObject.GetComponent<NaveEnemiga>();
+
+            // Verificar si se encontró el componente NaveEnemiga
+            if (naveEnemiga != null)
+            {
+                // Aplicar daño a la nave enemiga
+                naveEnemiga.RecibirDaño(Daño);
+            }
+
+            // Destruir el proyectil al impactar con la nave enemiga
             Destroy(gameObject);
         }
         else
