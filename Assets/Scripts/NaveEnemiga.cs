@@ -1,37 +1,47 @@
 using UnityEngine;
 
-public class NaveEnemiga : MonoBehaviour
+public class NaveEnemiga : MensajeManager
 {
     public float Velocidad;
-    public int VidaInicial = 3; // Puntos de vida iniciales de la nave enemiga
-    private int VidaActual; // Puntos de vida actuales
-    public float LímiteIzquierdo; // Límite izquierdo para el movimiento
-    public float LímiteDerecho; // Límite derecho para el movimiento
-    private bool moviendoseDerecha = true; // Flag para controlar la dirección del movimiento
-    public GameObject ProyectilPrefab; // Prefab del proyectil que dispara
-    public Transform PuntoDisparo; // Punto de origen del disparo
-    public float FrecuenciaDisparo = 1.0f; // Frecuencia de disparo en segundos
+    public int VidaInicial = 3;
+    private int VidaActual;
+    public float LímiteIzquierdo;
+    public float LímiteDerecho;
+    private bool moviendoseDerecha = true;
+    public GameObject ProyectilPrefab;
+    public Transform PuntoDisparo;
+    public float FrecuenciaDisparo = 1.0f;
     private float TiempoUltimoDisparo;
 
-    public int DañoProyectilEnemigo = 1; // Daño que inflige el proyectil del enemigo
+    public int DañoProyectilEnemigo = 1;
 
-    private NavePrincipal navePrincipal; // Referencia a la nave principal
+    private NavePrincipal navePrincipal;
+
+    // Variables para los sonidos
+    public AudioSource disparoEnemigoAudioSource;
+    public AudioSource choqueAudioSource; // Variable para el sonido de choque
 
     void Start()
     {
-        VidaActual = VidaInicial; // Establecer la vida inicial
+        VidaActual = VidaInicial;
 
         // Buscar la nave principal en la escena
         navePrincipal = GameObject.FindObjectOfType<NavePrincipal>();
+
+        // Mostrar el mensaje de ataque antes de comenzar
+        MostrarMensajeAtaque(3f);
+
+        // Configura el AudioSource para el sonido de disparo de naves enemigas
+        disparoEnemigoAudioSource = GetComponent<AudioSource>();
+       // disparoEnemigoAudioSource.clip = clipSonidoDisparoEnemigo; // Asigna el clip de sonido de disparo de naves enemigas
     }
 
     void Update()
     {
-        // Determinar la dirección del movimiento
         if (moviendoseDerecha)
         {
             transform.Translate(Vector3.right * Velocidad * Time.deltaTime);
-            // Si llega al límite derecho, cambia de dirección
+
             if (transform.position.x >= LímiteDerecho)
             {
                 moviendoseDerecha = false;
@@ -40,18 +50,20 @@ public class NaveEnemiga : MonoBehaviour
         else
         {
             transform.Translate(Vector3.left * Velocidad * Time.deltaTime);
-            // Si llega al límite izquierdo, cambia de dirección
+
             if (transform.position.x <= LímiteIzquierdo)
             {
                 moviendoseDerecha = true;
             }
         }
 
-        // Disparar automáticamente hacia abajo
         if (Time.time - TiempoUltimoDisparo >= FrecuenciaDisparo)
         {
             DispararAbajo();
             TiempoUltimoDisparo = Time.time;
+
+            // Reproduce el sonido de disparo de naves enemigas al disparar
+            disparoEnemigoAudioSource.Play();
         }
     }
 
@@ -60,9 +72,8 @@ public class NaveEnemiga : MonoBehaviour
         if (ProyectilPrefab != null && PuntoDisparo != null)
         {
             GameObject proyectil = Instantiate(ProyectilPrefab, PuntoDisparo.position, Quaternion.identity);
-            proyectil.tag = "ProyectilEnemigo"; // Etiqueta para identificar los proyectiles del enemigo
+            proyectil.tag = "ProyectilEnemigo";
 
-            // Asigna el daño al proyectil
             Proyectil proyectilScript = proyectil.GetComponent<Proyectil>();
             if (proyectilScript != null)
             {
@@ -77,13 +88,14 @@ public class NaveEnemiga : MonoBehaviour
 
         if (VidaActual <= 0)
         {
-            // Notificar a la nave principal que esta nave enemiga ha sido destruida
+            // Reproduce el sonido de choque al recibir daño
+            choqueAudioSource.Play();
+
             if (navePrincipal != null)
             {
                 navePrincipal.NaveEnemigaDestruida();
             }
 
-            // Destruir la nave enemiga
             Destroy(gameObject);
         }
     }

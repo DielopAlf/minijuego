@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NavePrincipal : MonoBehaviour
+public class NavePrincipal : MensajeManager
 {
     [SerializeField] KeyCode botonDerecha;
     [SerializeField] KeyCode botonIzquierda;
@@ -35,6 +35,15 @@ public class NavePrincipal : MonoBehaviour
 
     private bool perdio = false; // Nueva variable para verificar si el jugador perdió
 
+    // Variables para los sonidos
+    public AudioSource fondoAudioSource; // Sonido de fondo
+    public AudioSource disparoAudioSource; // Sonido de disparo de la nave principal
+    public AudioSource victoriaAudioSource; // Sonido de victoria
+    public AudioSource derrotaAudioSource; // Sonido de derrota
+    public AudioSource choqueAudioSource; // Sonido de choque
+    public AudioSource destruccionEnemigaAudioSource; // Sonido de destrucción de naves enemigas
+    public AudioClip clipSonidoFondo; // Variable para el sonido de fondo
+
     // Variable para el tiempo restante del nivel
     private float tiempoRestanteNivel;
 
@@ -49,8 +58,16 @@ public class NavePrincipal : MonoBehaviour
         navesEnemigas = GameObject.FindGameObjectsWithTag("NaveEnemiga");
         totalNavesEnemigas = navesEnemigas.Length;
 
+        // Mostrar el mensaje de ataque antes de comenzar
+        MostrarMensajeAtaque(3f); // Utiliza la función heredada
+
         // Calcular el tiempo restante del nivel
         tiempoRestanteNivel = tiempoLimiteDestrucionEnemigas;
+
+        // Configura el AudioSource para el sonido de fondo
+        fondoAudioSource = GetComponent<AudioSource>();
+        fondoAudioSource.clip = clipSonidoFondo; // Asigna el clip de sonido de fondo
+        fondoAudioSource.Play(); // Reproduce el sonido de fondo al iniciar el nivel
     }
 
     void Update()
@@ -71,6 +88,9 @@ public class NavePrincipal : MonoBehaviour
             {
                 Disparar();
                 tiempoUltimoDisparo = Time.time;
+
+                // Reproduce el sonido de disparo al presionar el botón de disparo
+                disparoAudioSource.Play();
             }
         }
 
@@ -97,24 +117,37 @@ public class NavePrincipal : MonoBehaviour
     {
         vidas -= cantidadDeDaño;
 
-        if (vidas <= 0 && !perdio) // Verifica si no ha perdido antes
+        if (vidas <= 0 && !perdio)
         {
+            // Reproduce el sonido de choque al recibir daño
+            choqueAudioSource.Play();
+
             MostrarPantallaDerrota();
-            perdio = true; // Marca que el jugador perdió
+            perdio = true;
         }
     }
 
     private void MostrarPantallaDerrota()
     {
+        // Detiene el sonido de fondo al mostrar la pantalla de derrota
+        fondoAudioSource.Stop();
+
+        // Reproduce el sonido de derrota
+        derrotaAudioSource.Play();
+
         panelDerrota.SetActive(true);
         Time.timeScale = 0f;
-
-        // Detiene el movimiento de la nave al establecer su velocidad a cero
         Speed = 0f;
     }
 
     private void MostrarVictoria()
     {
+        // Detiene el sonido de fondo al mostrar la pantalla de victoria
+        fondoAudioSource.Stop();
+
+        // Reproduce el sonido de victoria
+        victoriaAudioSource.Play();
+
         panelVictoria.SetActive(true);
         Time.timeScale = 0f;
 
@@ -160,16 +193,13 @@ public class NavePrincipal : MonoBehaviour
         Time.timeScale = 1;
 
         // Restablecer el tiempo límite de destrucción de enemigos
-        tiempoLimiteDestrucionEnemigas = Time.time + 60f; // Ajusta el tiempo límite según tus necesidades
+        tiempoLimiteDestrucionEnemigas = Time.time + 60f;
 
         // Restablecer la variable de tiempo restante del nivel
         tiempoRestanteNivel = tiempoLimiteDestrucionEnemigas;
 
         // Restablecer la escena actual
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
-        // Asegurarse de que el tiempo se actualice después de cargar la escena
-        // Time.fixedDeltaTime = 0.02f * Time.timeScale;
     }
 
     public void VolverAlMenuPrincipal()
@@ -184,6 +214,9 @@ public class NavePrincipal : MonoBehaviour
 
         if (navesEnemigasDestruidas >= totalNavesEnemigas)
         {
+            // Reproduce el sonido de destrucción de naves enemigas
+            destruccionEnemigaAudioSource.Play();
+
             MostrarVictoria();
             juegoTerminado = true;
         }
