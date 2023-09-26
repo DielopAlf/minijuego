@@ -40,10 +40,12 @@ public class NavePrincipal : MensajeManager
     public AudioClip disparoAudioClip; // Sonido de disparo de la nave principal
     public AudioClip victoriaAudioClip; // Sonido de victoria
     public AudioClip derrotaAudioClip; // Sonido de derrota
-    public AudioClip choqueAudioClip; // Sonido de choque
+    public AudioClip choqueAudioClip; // Sonido de choque con proyectil enemigo
+    public AudioClip choqueNaveEnemigaAudioClip; // Sonido de choque con nave enemiga
     public AudioClip destruccionEnemigaAudioClip; // Sonido de destrucción de naves enemigas
     public AudioClip clipSonidoFondo; // Variable para el sonido de fondo
     public AudioSource audioSource;
+
     // Variable para el tiempo restante del nivel
     private float tiempoRestanteNivel;
 
@@ -59,15 +61,12 @@ public class NavePrincipal : MensajeManager
         totalNavesEnemigas = navesEnemigas.Length;
 
         // Mostrar el mensaje de ataque antes de comenzar
-        MostrarMensajeAtaque(3f); // Utiliza la función heredada
+       // MostrarMensajeAtaque(3f); // Utiliza la función heredada
 
-        // Calcular el tiempo restante del nivel
-        tiempoRestanteNivel = tiempoLimiteDestrucionEnemigas;
-        audioSource = GetComponent<AudioSource>();
         // Configura el AudioSource para el sonido de fondo
-       // fondoAudioClip = GetComponent<AudioSource>();
-        //fondoAudioClip.clip = clipSonidoFondo; // Asigna el clip de sonido de fondo
-        //fondoAudioClip.Play(); // Reproduce el sonido de fondo al iniciar el nivel
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = clipSonidoFondo; // Asigna el clip de sonido de fondo
+        audioSource.Play(); // Reproduce el sonido de fondo al iniciar el nivel
     }
 
     void Update()
@@ -120,17 +119,28 @@ public class NavePrincipal : MensajeManager
         if (vidas <= 0 && !perdio)
         {
             // Reproduce el sonido de choque al recibir daño
-           // audioSource.PlayOneShot(choqueAudioClip);
+            audioSource.PlayOneShot(choqueAudioClip);
 
             MostrarPantallaDerrota();
             perdio = true;
         }
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("ProyectilEnemigo"))
+        {
+            // Reproduce el sonido de choque al colisionar con un proyectil enemigo
+            audioSource.PlayOneShot(choqueNaveEnemigaAudioClip);
+
+            // Resto de la lógica para manejar la colisión con un proyectil enemigo
+        }
+    }
+
     private void MostrarPantallaDerrota()
     {
         // Detiene el sonido de fondo al mostrar la pantalla de derrota
-      //  fondoAudioClip.Stop();
+        audioSource.Stop();
 
         // Reproduce el sonido de derrota
         audioSource.PlayOneShot(derrotaAudioClip);
@@ -143,7 +153,7 @@ public class NavePrincipal : MensajeManager
     private void MostrarVictoria()
     {
         // Detiene el sonido de fondo al mostrar la pantalla de victoria
-        //fondoAudioSource.Stop();
+        audioSource.Stop();
 
         // Reproduce el sonido de victoria
         audioSource.PlayOneShot(victoriaAudioClip);

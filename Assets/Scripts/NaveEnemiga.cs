@@ -20,6 +20,7 @@ public class NaveEnemiga : MensajeManager
     // Variables para los sonidos
     public AudioClip disparoEnemigoAudioClip;
     public AudioClip choqueAudioClip;
+    public AudioClip choqueNavePrincipalAudioClip;
     public AudioSource audioSource; // Variable para el sonido de choque
 
     void Start()
@@ -34,7 +35,6 @@ public class NaveEnemiga : MensajeManager
 
         // Configura el AudioSource para el sonido de disparo de naves enemigas
         audioSource = GetComponent<AudioSource>();
-        // disparoEnemigoAudioSource.clip = clipSonidoDisparoEnemigo; // Asigna el clip de sonido de disparo de naves enemigas
     }
 
     void Update()
@@ -61,12 +61,8 @@ public class NaveEnemiga : MensajeManager
         if (Time.time - TiempoUltimoDisparo >= FrecuenciaDisparo)
         {
             DispararAbajo();
-           // audioSource.PlayOneShot(disparoEnemigoAudioClip);
+            audioSource.PlayOneShot(disparoEnemigoAudioClip);
             TiempoUltimoDisparo = Time.time;
-
-            // Reproduce el sonido de disparo de naves enemigas al disparar
-           
-           
         }
     }
 
@@ -100,6 +96,17 @@ public class NaveEnemiga : MensajeManager
             }
 
             Destroy(gameObject);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("ProyectilJugador"))
+        {
+            // Reproduce el sonido de choque al colisionar con un proyectil de la nave principal
+            audioSource.PlayOneShot(choqueNavePrincipalAudioClip);
+
+            // Resto de la lógica para manejar la colisión con un proyectil de la nave principal
         }
     }
 }
