@@ -61,7 +61,7 @@ public class NaveEnemiga : MensajeManager
         if (Time.time - TiempoUltimoDisparo >= FrecuenciaDisparo)
         {
             DispararAbajo();
-            audioSource.PlayOneShot(disparoEnemigoAudioClip);
+           // audioSource.PlayOneShot(disparoEnemigoAudioClip);
             TiempoUltimoDisparo = Time.time;
 
             // Reproduce el sonido de disparo de naves enemigas al disparar

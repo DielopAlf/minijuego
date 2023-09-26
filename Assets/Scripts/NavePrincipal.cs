@@ -120,7 +120,7 @@ public class NavePrincipal : MensajeManager
         if (vidas <= 0 && !perdio)
         {
             // Reproduce el sonido de choque al recibir daño
-            audioSource.PlayOneShot(choqueAudioClip);
+           // audioSource.PlayOneShot(choqueAudioClip);
 
             MostrarPantallaDerrota();
             perdio = true;

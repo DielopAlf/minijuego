@@ -6,6 +6,12 @@ public class Proyectil : MonoBehaviour
     public int Daño = 1; // Daño que inflige el proyectil
     public float TiempoDeVida = 5f; // Tiempo de vida del proyectil
 
+    public AudioClip choqueAudioClip; // Variable para el sonido de fondo
+    public AudioClip choqueEnemigoAudioClip;
+    public AudioSource audioSource;
+
+
+
     void Start()
     {
         // Destruye el proyectil después de un tiempo
@@ -31,6 +37,7 @@ public class Proyectil : MonoBehaviour
             {
                 // Aplicar daño a la nave principal
                 navePrincipal.RecibirDaño(Daño);
+                audioSource.PlayOneShot(choqueAudioClip);
             }
 
             // Destruir el proyectil al impactar con la nave principal
@@ -46,6 +53,7 @@ public class Proyectil : MonoBehaviour
             {
                 // Aplicar daño a la nave enemiga
                 naveEnemiga.RecibirDaño(Daño);
+                audioSource.PlayOneShot(choqueEnemigoAudioClip);
             }
 
             // Destruir el proyectil al impactar con la nave enemiga
