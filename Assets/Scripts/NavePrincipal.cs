@@ -36,14 +36,14 @@ public class NavePrincipal : MensajeManager
     private bool perdio = false; // Nueva variable para verificar si el jugador perdió
 
     // Variables para los sonidos
-    public AudioSource fondoAudioSource; // Sonido de fondo
-    public AudioSource disparoAudioSource; // Sonido de disparo de la nave principal
-    public AudioSource victoriaAudioSource; // Sonido de victoria
-    public AudioSource derrotaAudioSource; // Sonido de derrota
-    public AudioSource choqueAudioSource; // Sonido de choque
-    public AudioSource destruccionEnemigaAudioSource; // Sonido de destrucción de naves enemigas
+    public AudioClip fondoAudioClip; // Sonido de fondo
+    public AudioClip disparoAudioClip; // Sonido de disparo de la nave principal
+    public AudioClip victoriaAudioClip; // Sonido de victoria
+    public AudioClip derrotaAudioClip; // Sonido de derrota
+    public AudioClip choqueAudioClip; // Sonido de choque
+    public AudioClip destruccionEnemigaAudioClip; // Sonido de destrucción de naves enemigas
     public AudioClip clipSonidoFondo; // Variable para el sonido de fondo
-
+    public AudioSource audioSource;
     // Variable para el tiempo restante del nivel
     private float tiempoRestanteNivel;
 
@@ -63,11 +63,11 @@ public class NavePrincipal : MensajeManager
 
         // Calcular el tiempo restante del nivel
         tiempoRestanteNivel = tiempoLimiteDestrucionEnemigas;
-
+        audioSource = GetComponent<AudioSource>();
         // Configura el AudioSource para el sonido de fondo
-        fondoAudioSource = GetComponent<AudioSource>();
-        fondoAudioSource.clip = clipSonidoFondo; // Asigna el clip de sonido de fondo
-        fondoAudioSource.Play(); // Reproduce el sonido de fondo al iniciar el nivel
+       // fondoAudioClip = GetComponent<AudioSource>();
+        //fondoAudioClip.clip = clipSonidoFondo; // Asigna el clip de sonido de fondo
+        //fondoAudioClip.Play(); // Reproduce el sonido de fondo al iniciar el nivel
     }
 
     void Update()
@@ -90,7 +90,7 @@ public class NavePrincipal : MensajeManager
                 tiempoUltimoDisparo = Time.time;
 
                 // Reproduce el sonido de disparo al presionar el botón de disparo
-                disparoAudioSource.Play();
+                audioSource.PlayOneShot(disparoAudioClip);
             }
         }
 
@@ -120,7 +120,7 @@ public class NavePrincipal : MensajeManager
         if (vidas <= 0 && !perdio)
         {
             // Reproduce el sonido de choque al recibir daño
-            choqueAudioSource.Play();
+            audioSource.PlayOneShot(choqueAudioClip);
 
             MostrarPantallaDerrota();
             perdio = true;
@@ -130,10 +130,10 @@ public class NavePrincipal : MensajeManager
     private void MostrarPantallaDerrota()
     {
         // Detiene el sonido de fondo al mostrar la pantalla de derrota
-        fondoAudioSource.Stop();
+      //  fondoAudioClip.Stop();
 
         // Reproduce el sonido de derrota
-        derrotaAudioSource.Play();
+        audioSource.PlayOneShot(derrotaAudioClip);
 
         panelDerrota.SetActive(true);
         Time.timeScale = 0f;
@@ -143,10 +143,10 @@ public class NavePrincipal : MensajeManager
     private void MostrarVictoria()
     {
         // Detiene el sonido de fondo al mostrar la pantalla de victoria
-        fondoAudioSource.Stop();
+        //fondoAudioSource.Stop();
 
         // Reproduce el sonido de victoria
-        victoriaAudioSource.Play();
+        audioSource.PlayOneShot(victoriaAudioClip);
 
         panelVictoria.SetActive(true);
         Time.timeScale = 0f;
@@ -215,7 +215,7 @@ public class NavePrincipal : MensajeManager
         if (navesEnemigasDestruidas >= totalNavesEnemigas)
         {
             // Reproduce el sonido de destrucción de naves enemigas
-            destruccionEnemigaAudioSource.Play();
+            audioSource.PlayOneShot(destruccionEnemigaAudioClip);
 
             MostrarVictoria();
             juegoTerminado = true;

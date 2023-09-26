@@ -18,8 +18,9 @@ public class NaveEnemiga : MensajeManager
     private NavePrincipal navePrincipal;
 
     // Variables para los sonidos
-    public AudioSource disparoEnemigoAudioSource;
-    public AudioSource choqueAudioSource; // Variable para el sonido de choque
+    public AudioClip disparoEnemigoAudioClip;
+    public AudioClip choqueAudioClip;
+    public AudioSource audioSource; // Variable para el sonido de choque
 
     void Start()
     {
@@ -32,8 +33,8 @@ public class NaveEnemiga : MensajeManager
         MostrarMensajeAtaque(3f);
 
         // Configura el AudioSource para el sonido de disparo de naves enemigas
-        disparoEnemigoAudioSource = GetComponent<AudioSource>();
-       // disparoEnemigoAudioSource.clip = clipSonidoDisparoEnemigo; // Asigna el clip de sonido de disparo de naves enemigas
+        audioSource = GetComponent<AudioSource>();
+        // disparoEnemigoAudioSource.clip = clipSonidoDisparoEnemigo; // Asigna el clip de sonido de disparo de naves enemigas
     }
 
     void Update()
@@ -60,10 +61,12 @@ public class NaveEnemiga : MensajeManager
         if (Time.time - TiempoUltimoDisparo >= FrecuenciaDisparo)
         {
             DispararAbajo();
+            audioSource.PlayOneShot(disparoEnemigoAudioClip);
             TiempoUltimoDisparo = Time.time;
 
             // Reproduce el sonido de disparo de naves enemigas al disparar
-            disparoEnemigoAudioSource.Play();
+           
+           
         }
     }
 
@@ -89,7 +92,7 @@ public class NaveEnemiga : MensajeManager
         if (VidaActual <= 0)
         {
             // Reproduce el sonido de choque al recibir daño
-            choqueAudioSource.Play();
+            audioSource.PlayOneShot(choqueAudioClip);
 
             if (navePrincipal != null)
             {
