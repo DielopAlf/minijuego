@@ -79,5 +79,11 @@ namespace MyNamespace
 
             SceneManager.LoadScene(nivel);
         }
+        public void VolverAlMenuPrincipal()
+    {
+        SceneManager.LoadScene("Menu");
+        Time.timeScale = 1;
     }
+    }
+   
 }
