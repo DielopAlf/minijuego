@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
+using System.Collections.Generic;
 
 public class NavePrincipal : MensajeManager
 {
@@ -33,7 +36,9 @@ public class NavePrincipal : MensajeManager
 
     public GameObject[] navesEnemigas; // Arreglo para almacenar las naves enemigas
 
-    private bool perdio = false; // Nueva variable para verificar si el jugador perdió
+    public TextMeshProUGUI tiempoRestanteText;
+
+    private bool perdio = false;
 
     // Variables para los sonidos
     public AudioClip fondoAudioClip; // Sonido de fondo
@@ -46,8 +51,11 @@ public class NavePrincipal : MensajeManager
     public AudioClip clipSonidoFondo; // Variable para el sonido de fondo
     public AudioSource audioSource;
 
-    // Variable para el tiempo restante del nivel
     private float tiempoRestanteNivel;
+
+    public GameObject vidaPrefab; // Prefab del sprite de vida
+    public Transform vidaParent; // Transform del objeto padre para los sprites de vida
+    private List<GameObject> vidasVisuales = new List<GameObject>(); // Lista de sprites de vida visuales
 
     void Start()
     {
@@ -56,17 +64,14 @@ public class NavePrincipal : MensajeManager
         nivelActual = PlayerPrefs.GetInt("NivelActual", 1);
         nivelCompletado = PlayerPrefs.GetInt("Nivel" + nivelActual + "Completado", 0);
 
-        // Buscar todas las naves enemigas y almacenarlas en el arreglo
         navesEnemigas = GameObject.FindGameObjectsWithTag("NaveEnemiga");
         totalNavesEnemigas = navesEnemigas.Length;
 
-        // Mostrar el mensaje de ataque antes de comenzar
-       // MostrarMensajeAtaque(3f); // Utiliza la función heredada
-
-        // Configura el AudioSource para el sonido de fondo
         audioSource = GetComponent<AudioSource>();
-        audioSource.clip = clipSonidoFondo; // Asigna el clip de sonido de fondo
-        audioSource.Play(); // Reproduce el sonido de fondo al iniciar el nivel
+        audioSource.clip = clipSonidoFondo;
+        audioSource.Play();
+
+        InicializarVidasVisuales();
     }
 
     void Update()
@@ -88,12 +93,10 @@ public class NavePrincipal : MensajeManager
                 Disparar();
                 tiempoUltimoDisparo = Time.time;
 
-                // Reproduce el sonido de disparo al presionar el botón de disparo
                 audioSource.PlayOneShot(disparoAudioClip);
             }
         }
 
-        // Actualizar el tiempo restante del nivel
         tiempoRestanteNivel = tiempoLimiteDestrucionEnemigas - (Time.time - tiempoInicial);
 
         if (tiempoRestanteNivel <= 0 && !juegoTerminado)
@@ -101,6 +104,8 @@ public class NavePrincipal : MensajeManager
             MostrarPantallaDerrota();
             juegoTerminado = true;
         }
+
+        tiempoRestanteText.text = "" + Mathf.FloorToInt(tiempoRestanteNivel);
     }
 
     void Disparar()
@@ -116,9 +121,10 @@ public class NavePrincipal : MensajeManager
     {
         vidas -= cantidadDeDaño;
 
+        QuitarVidaVisual();
+
         if (vidas <= 0 && !perdio)
         {
-            // Reproduce el sonido de choque al recibir daño
             audioSource.PlayOneShot(choqueAudioClip);
 
             MostrarPantallaDerrota();
@@ -130,7 +136,6 @@ public class NavePrincipal : MensajeManager
     {
         if (other.CompareTag("ProyectilEnemigo"))
         {
-            // Reproduce el sonido de choque al colisionar con un proyectil enemigo
             audioSource.PlayOneShot(choqueNaveEnemigaAudioClip);
 
             // Resto de la lógica para manejar la colisión con un proyectil enemigo
@@ -139,10 +144,7 @@ public class NavePrincipal : MensajeManager
 
     private void MostrarPantallaDerrota()
     {
-        // Detiene el sonido de fondo al mostrar la pantalla de derrota
         audioSource.Stop();
-
-        // Reproduce el sonido de derrota
         audioSource.PlayOneShot(derrotaAudioClip);
 
         panelDerrota.SetActive(true);
@@ -152,16 +154,12 @@ public class NavePrincipal : MensajeManager
 
     private void MostrarVictoria()
     {
-        // Detiene el sonido de fondo al mostrar la pantalla de victoria
         audioSource.Stop();
-
-        // Reproduce el sonido de victoria
         audioSource.PlayOneShot(victoriaAudioClip);
 
         panelVictoria.SetActive(true);
         Time.timeScale = 0f;
 
-        // Desbloquear el siguiente nivel
         PlayerPrefs.SetInt("Nivel" + (nivelActual + 1) + "Completado", 1);
         PlayerPrefs.Save();
     }
@@ -199,16 +197,12 @@ public class NavePrincipal : MensajeManager
 
     public void ReiniciarNivel()
     {
-        // Restablecer el tiempo a 1 (velocidad normal)
         Time.timeScale = 1;
 
-        // Restablecer el tiempo límite de destrucción de enemigos
         tiempoLimiteDestrucionEnemigas = Time.time + 60f;
 
-        // Restablecer la variable de tiempo restante del nivel
         tiempoRestanteNivel = tiempoLimiteDestrucionEnemigas;
 
-        // Restablecer la escena actual
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -218,17 +212,39 @@ public class NavePrincipal : MensajeManager
         Time.timeScale = 1;
     }
 
-    public void NaveEnemigaDestruida()
+   public void NaveEnemigaDestruida()
     {
         navesEnemigasDestruidas++;
 
         if (navesEnemigasDestruidas >= totalNavesEnemigas)
         {
-            // Reproduce el sonido de destrucción de naves enemigas
             audioSource.PlayOneShot(destruccionEnemigaAudioClip);
 
             MostrarVictoria();
             juegoTerminado = true;
+        }
+    }
+
+    private void InicializarVidasVisuales()
+    {
+        // Asegúrate de que vidaPrefab y vidaParent estén configurados en el Inspector
+        if (vidaPrefab != null && vidaParent != null)
+        {
+            for (int i = 0; i < vidas; i++)
+            {
+                Vector3 spawnPosition = new Vector3(vidaParent.position.x + i * 1.5f, vidaParent.position.y, vidaParent.position.z);
+                GameObject vidaVisual = Instantiate(vidaPrefab, spawnPosition, Quaternion.identity, vidaParent);
+                vidasVisuales.Add(vidaVisual);
+            }
+        }
+    }
+
+    private void QuitarVidaVisual()
+    {
+        if (vidasVisuales.Count > 0)
+        {
+            Destroy(vidasVisuales[vidasVisuales.Count - 1]);
+            vidasVisuales.RemoveAt(vidasVisuales.Count - 1);
         }
     }
 }
