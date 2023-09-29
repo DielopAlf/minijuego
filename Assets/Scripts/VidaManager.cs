@@ -5,7 +5,7 @@ public class VidaManager : MonoBehaviour
 {
     public int vidasIniciales = 3; // Cantidad inicial de vidas
     public GameObject spriteVidaPrefab; // Prefab del sprite de vida
-    public Vector3 posicionInicialVidas = new Vector3(-5f, 5f, 0f); // Posición inicial de las vidas visuales
+    public Vector3 posicionInicialVidas = new Vector3(0f, 0f, 0f); // Posición inicial de las vidas visuales
 
     private int vidas; // Variable para rastrear la cantidad actual de vidas
     private List<GameObject> vidasVisuales = new List<GameObject>(); // Lista para almacenar los sprites de vida
@@ -43,7 +43,7 @@ public class VidaManager : MonoBehaviour
         {
             // Instancia el sprite de vida visual
             GameObject vidaVisual = Instantiate(spriteVidaPrefab, transform);
-            vidaVisual.transform.position = posicionInicialVidas + new Vector3(i * 1.5f, 0f, 0f); // Ajusta la posición
+            vidaVisual.transform.position = posicionInicialVidas + new Vector3(i * 0f, 0f, 0f);
             vidasVisuales.Add(vidaVisual); // Agrega el objeto a la lista
         }
     }
