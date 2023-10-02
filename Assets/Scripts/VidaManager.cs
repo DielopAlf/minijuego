@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class VidaManager : MonoBehaviour
 {
     public int vidasIniciales = 3; // Cantidad inicial de vidas
-    public GameObject spriteVidaPrefab; // Prefab del sprite de vida
+   // public GameObject spriteVidaPrefab; // Prefab del sprite de vida
     public Vector3 posicionInicialVidas = new Vector3(0f, 0f, 0f); // Posición inicial de las vidas visuales
 
     private int vidas; // Variable para rastrear la cantidad actual de vidas
@@ -42,9 +42,9 @@ public class VidaManager : MonoBehaviour
         for (int i = 0; i < vidasIniciales; i++)
         {
             // Instancia el sprite de vida visual
-            GameObject vidaVisual = Instantiate(spriteVidaPrefab, transform);
-            vidaVisual.transform.position = posicionInicialVidas + new Vector3(i * 0f, 0f, 0f);
-            vidasVisuales.Add(vidaVisual); // Agrega el objeto a la lista
+           // GameObject vidaVisual = Instantiate(spriteVidaPrefab, transform);
+            //vidaVisual.transform.position = posicionInicialVidas + new Vector3(i * 0f, 0f, 0f);
+            //vidasVisuales.Add(vidaVisual); // Agrega el objeto a la lista
         }
     }
 
@@ -54,8 +54,8 @@ public class VidaManager : MonoBehaviour
         if (vidasVisuales.Count > vidas)
         {
             // Si hay más vidas visuales de las que debería haber, destrúyelas
-            Destroy(vidasVisuales[vidasVisuales.Count - 1]);
-            vidasVisuales.RemoveAt(vidasVisuales.Count - 1);
+           // Destroy(vidasVisuales[vidasVisuales.Count - 1]);
+            //vidasVisuales.RemoveAt(vidasVisuales.Count - 1);
         }
     }
 }

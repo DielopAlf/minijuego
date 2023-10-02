@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 
-public class NavePrincipal : MensajeManager
+public class NavePrincipal : MonoBehaviour
 {
     [SerializeField] KeyCode botonDerecha;
     [SerializeField] KeyCode botonIzquierda;

@@ -103,7 +103,7 @@ MonoBehaviour:
   Velocidad: 5
   "Da\xF1o": 1
   TiempoDeVida: 5
-  choqueAudioClip: {fileID: 8300000, guid: 53399895772fb9e419734b1f5858db3d, type: 3}
+  choqueAudioClip: {fileID: 8300000, guid: ae904c7305df7344d86b2092c0cb3a26, type: 3}
   choqueEnemigoAudioClip: {fileID: 8300000, guid: 53399895772fb9e419734b1f5858db3d,
     type: 3}
   audioSource: {fileID: 3717228615641253283}

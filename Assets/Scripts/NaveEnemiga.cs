@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NaveEnemiga : MensajeManager
+public class NaveEnemiga : MonoBehaviour
 {
     public float Velocidad;
     public int VidaInicial = 3;
@@ -30,8 +30,7 @@ public class NaveEnemiga : MensajeManager
         // Buscar la nave principal en la escena
         navePrincipal = GameObject.FindObjectOfType<NavePrincipal>();
 
-        // Mostrar el mensaje de ataque antes de comenzar
-        MostrarMensajeAtaque(3f);
+        
 
         // Configura el AudioSource para el sonido de disparo de naves enemigas
         audioSource = GetComponent<AudioSource>();
@@ -94,7 +93,7 @@ public class NaveEnemiga : MensajeManager
             {
                 navePrincipal.NaveEnemigaDestruida();
             }
-
+            audioSource.PlayOneShot(choqueAudioClip);
             Destroy(gameObject);
         }
     }
