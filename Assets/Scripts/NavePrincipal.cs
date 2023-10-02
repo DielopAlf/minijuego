@@ -24,6 +24,7 @@ public class NavePrincipal : MensajeManager
     public GameObject panelVictoria;
 
     public float tiempoLimiteDestrucionEnemigas = 60f;
+
     private bool juegoTerminado = false;
 
     private int navesEnemigasDestruidas = 0;
@@ -106,7 +107,8 @@ public class NavePrincipal : MensajeManager
         }
 
         tiempoRestanteText.text = "" + Mathf.FloorToInt(tiempoRestanteNivel);
-    }
+
+    } // fin de update
 
     void Disparar()
     {
