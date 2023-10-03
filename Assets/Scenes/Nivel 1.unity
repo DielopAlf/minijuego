@@ -250,7 +250,7 @@ MonoBehaviour:
   choqueAudioClip: {fileID: 8300000, guid: 53399895772fb9e419734b1f5858db3d, type: 3}
   choqueNaveEnemigaAudioClip: {fileID: 8300000, guid: 3d3cb1e0f1dc2254b99e428f198ae599,
     type: 3}
-  destruccionEnemigaAudioClip: {fileID: 8300000, guid: 645508cc8797c4e4e9b9fca5a8ee2134,
+  destruccionEnemigaAudioClip: {fileID: 8300000, guid: ae987d6b882edae4986b5cf965016f89,
     type: 3}
   clipSonidoFondo: {fileID: 8300000, guid: 379b32600e5a5314ba2fb9885cdfae60, type: 3}
   audioSource: {fileID: 177127687}
