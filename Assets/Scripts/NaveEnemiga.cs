@@ -21,7 +21,7 @@ public class NaveEnemiga : MonoBehaviour
     public AudioClip disparoEnemigoAudioClip;
     public AudioClip choqueAudioClip;
     public AudioClip choqueNavePrincipalAudioClip;
-    public AudioClip DESTRUIDOAudioClip;
+    public AudioClip sonidoDeDestruccionNaveEnemigaAudioClip;
 
     public AudioSource audioSource; // Variable para el sonido de choque
 
@@ -82,24 +82,8 @@ public class NaveEnemiga : MonoBehaviour
         }
     }
 
-    public void RecibirDaño(int cantidad)
-    {
-        VidaActual -= cantidad;
+    
 
-        if (VidaActual <= 0)
-        {
-            // Reproduce el sonido de choque al recibir daño
-            audioSource.PlayOneShot(DESTRUIDOAudioClip);
-
-            if (navePrincipal != null)
-            {
-                navePrincipal.NaveEnemigaDestruida();
-            }
-            //audioSource.PlayOneShot(DESTRUIDOAudioClip);
-            Destroy(gameObject);
-            Debug.Log("suena");
-        }
-    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -109,6 +93,22 @@ public class NaveEnemiga : MonoBehaviour
             audioSource.PlayOneShot(choqueNavePrincipalAudioClip);
 
             // Resto de la lógica para manejar la colisión con un proyectil de la nave principal
+        }
+    }
+    public void RecibirDaño(int cantidad)
+    {
+        VidaActual -= cantidad;
+
+        if (VidaActual <= 0)
+        {
+            // Reproduce el sonido de destrucción de la nave enemiga
+            audioSource.PlayOneShot(sonidoDeDestruccionNaveEnemigaAudioClip);
+
+            if (navePrincipal != null)
+            {
+                navePrincipal.NaveEnemigaDestruida();
+            }
+            Destroy(gameObject);
         }
     }
 }
