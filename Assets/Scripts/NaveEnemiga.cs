@@ -21,6 +21,8 @@ public class NaveEnemiga : MonoBehaviour
     public AudioClip disparoEnemigoAudioClip;
     public AudioClip choqueAudioClip;
     public AudioClip choqueNavePrincipalAudioClip;
+    public AudioClip DESTRUIDOAudioClip;
+
     public AudioSource audioSource; // Variable para el sonido de choque
 
     void Start()
@@ -60,10 +62,10 @@ public class NaveEnemiga : MonoBehaviour
         if (Time.time - TiempoUltimoDisparo >= FrecuenciaDisparo)
         {
             DispararAbajo();
-            audioSource.PlayOneShot(disparoEnemigoAudioClip);
+           // audioSource.PlayOneShot(disparoEnemigoAudioClip);
             TiempoUltimoDisparo = Time.time;
         }
-    }
+    }  // hasta aquí update
 
     void DispararAbajo()
     {
@@ -87,14 +89,15 @@ public class NaveEnemiga : MonoBehaviour
         if (VidaActual <= 0)
         {
             // Reproduce el sonido de choque al recibir daño
-            audioSource.PlayOneShot(choqueAudioClip);
+            audioSource.PlayOneShot(DESTRUIDOAudioClip);
 
             if (navePrincipal != null)
             {
                 navePrincipal.NaveEnemigaDestruida();
             }
-            audioSource.PlayOneShot(choqueAudioClip);
+            //audioSource.PlayOneShot(DESTRUIDOAudioClip);
             Destroy(gameObject);
+            Debug.Log("suena");
         }
     }
 
