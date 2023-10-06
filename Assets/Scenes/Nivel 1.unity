@@ -3270,12 +3270,12 @@ MonoBehaviour:
   FrecuenciaDisparo: 0
   "Da\xF1oProyectilEnemigo": 1
   disparoEnemigoAudioClip: {fileID: 0}
-  choqueAudioClip: {fileID: 8300000, guid: 645508cc8797c4e4e9b9fca5a8ee2134, type: 3}
+  choqueAudioClip: {fileID: 0}
   choqueNavePrincipalAudioClip: {fileID: 8300000, guid: bb4ce0f64ac0ad240afe38ed0858648c,
     type: 3}
   sonidoDeDestruccionNaveEnemigaAudioClip: {fileID: 8300000, guid: 53399895772fb9e419734b1f5858db3d,
     type: 3}
-  audioSource: {fileID: 1090889502}
+  audioSource: {fileID: 177127687}
 --- !u!50 &1090889499
 Rigidbody2D:
   serializedVersion: 4
@@ -5436,12 +5436,12 @@ MonoBehaviour:
   FrecuenciaDisparo: 0
   "Da\xF1oProyectilEnemigo": 1
   disparoEnemigoAudioClip: {fileID: 0}
-  choqueAudioClip: {fileID: 8300000, guid: 645508cc8797c4e4e9b9fca5a8ee2134, type: 3}
+  choqueAudioClip: {fileID: 0}
   choqueNavePrincipalAudioClip: {fileID: 8300000, guid: bb4ce0f64ac0ad240afe38ed0858648c,
     type: 3}
   sonidoDeDestruccionNaveEnemigaAudioClip: {fileID: 8300000, guid: 53399895772fb9e419734b1f5858db3d,
     type: 3}
-  audioSource: {fileID: 1760051527}
+  audioSource: {fileID: 177127687}
 --- !u!61 &1760051524
 BoxCollider2D:
   m_ObjectHideFlags: 0
