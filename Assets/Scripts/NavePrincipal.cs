@@ -106,7 +106,7 @@ public class NavePrincipal : MonoBehaviour
             juegoTerminado = true;
         }
 
-        tiempoRestanteText.text = "" + Mathf.FloorToInt(tiempoRestanteNivel);
+        tiempoRestanteText.text = "00:" + Mathf.FloorToInt(tiempoRestanteNivel);
 
     } // fin de update
 

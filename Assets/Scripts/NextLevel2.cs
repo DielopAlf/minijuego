@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class nextlevel : MonoBehaviour
+public class NextLevel2 : MonoBehaviour
+ 
 {
 
     void Start()
     {
-      //  Debug.Log("cargarnivel2");
+        //  Debug.Log("cargarnivel2");
     }
 
 
     public void LoadA(string nivel)
     {
-       
-        SceneManager.LoadScene(nivel);
-        Debug.Log(nivel);
+        Debug.Log("Hola");
+        SceneManager.LoadScene("Nivel 2");
 
-    } 
+    }
 }
