@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class NextLevel2 : MonoBehaviour
- 
+
 {
 
     void Start()
@@ -15,8 +15,9 @@ public class NextLevel2 : MonoBehaviour
 
     public void LoadA(string nivel)
     {
-        Debug.Log("Hola");
-        SceneManager.LoadScene("Nivel 2");
+
+        SceneManager.LoadScene(nivel);
+        Debug.Log(nivel);
 
     }
 }
